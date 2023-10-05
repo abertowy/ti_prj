@@ -1,0 +1,25 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(HybridEngineTest VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(PROJECT_SOURCES
+        src/main.cpp
+        src/engine.cpp
+        src/electricengine.cpp
+        src/gasolineengine.cpp
+        src/hybridengine.cpp
+        src/engine.h
+        src/electricengine.h
+        src/gasolineengine.h
+        src/hybridengine.h
+)
+
+add_executable(HybridEngineTest
+    ${PROJECT_SOURCES}
+)
+
+# set_target_properties(HybridEngineTest PROPERTIES
+#     WIN32_EXECUTABLE TRUE
+# )

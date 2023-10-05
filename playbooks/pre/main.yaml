@@ -1,0 +1,7 @@
+- name: Prepare environment for build process
+  hosts: all
+
+  tasks:
+    - name: set pre-run action
+      set_fact:
+        pre_run_action: prepare

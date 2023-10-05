@@ -1,0 +1,13 @@
+- name: Upload build artifacts
+  hosts: all
+
+  tasks:
+    - name: set post-run action
+      set_fact:
+        post_run_action: upload
+
+    - name: compress all the files in tar.gz
+      archive:
+        path: "{{ project_path }}/build/{{ project_name }}"
+        dest: "{{ artifacts_path }}/{{ pkg_name }}"
+        format: gz

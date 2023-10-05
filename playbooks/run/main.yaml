@@ -1,0 +1,14 @@
+- name: Build project
+  hosts: all
+
+  tasks:
+    - name: set run action
+      set_fact:
+        run_action: build
+
+    - include_role:
+        name: build-project
+      vars:
+        project_dir: "{{ project_path }}"
+        project: "{{ project_name }}"
+        pkg: "{{ pkg_name }}"

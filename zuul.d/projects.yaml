@@ -1,0 +1,16 @@
+- job:
+    name: project-build-and-upload
+    description: |
+      Base job for manual builds
+      Maintainer: Dev Team (dev@example.com)
+    pre-run:
+      - playbooks/pre/main.yaml
+    run:
+      - playbooks/run/main.yaml
+    post-run:
+      - playbooks/post/main.yaml
+    vars:
+      project_path: /some_path/project
+      project_name: HybridEngineTest
+      artifacts_path: /some_path/artifacts
+      pkg_name: pkg-release.tar.gz
