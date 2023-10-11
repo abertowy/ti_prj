@@ -1,11 +1,2 @@
-- name: Create CMakeLists for build
-  shell: "python createMakefile.py --src-path src --project {{ HybridEngineTest }}"
-  register: create_cmakelists
-  change_dir: "{{ project_dir }}"
-
-- name: Build project via CMake
-  shell: |
-    cmake -S . -B build
-    cmake --build build
-  register: build_project_cmake
-  change_dir: "{{ project_dir }}"
+# TODO: add task that creates CMakeLists for the project via python script 'createMakefile.py'
+# TODO: add task that builds project via CMake in 'build' dir

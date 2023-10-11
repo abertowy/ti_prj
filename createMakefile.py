@@ -8,11 +8,9 @@ RESULT_FILE = "CMakeLists.txt"
 
 
 def get_sources(path):
-    sources = []
-    for root, dirs, files in os.walk(path):
-        sources = [path + "/" + file + "\n" for file in files]
-    print(sources)
-    return sources
+    # TODO: collect all src files under the given path and return srcs list
+    # TODO: reminder - all elements of the list should end with '\n'
+    return []
 
 
 def main():
@@ -23,14 +21,10 @@ def main():
 
     srcs_lines = get_sources(args.src_path)
 
-    with open(TEMPLATE_FILE) as f:
-        text = f.readlines()
-
-    text = [line.replace("PROJECT_NAME", args.project) for line in text]
-    text = text[:7] + srcs_lines + text[7:]
-
-    with (open(os.path.join(os.getcwd(), RESULT_FILE), 'w')) as f:
-        f.writelines(text)
+    # TODO: read template file
+    # TODO: replace 'PROJECT_NAME' with given arg 'project'
+    # TODO: insert srcs_lines list between lines 7 and 8 in template file
+    # TODO: create result file with all info
 
 
 if __name__ == "__main__":

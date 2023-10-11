@@ -9,6 +9,4 @@
     - include_role:
         name: build-project
       vars:
-        project_dir: "{{ project_path }}"
-        project: "{{ project_name }}"
-        pkg: "{{ pkg_name }}"
+        # TODO: pass these vars to the role: 'project_path', 'project_name', 'pkg_name'
