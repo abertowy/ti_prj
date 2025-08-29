@@ -1,0 +1,112 @@
+# zuul.d/projects.yaml
+- job:
+    name: project-build-and-upload
+    description: |
+      Base job for manual builds
+      Maintainer: Dev Team (dev@example.com)
+    pre-run:
+      - playbooks/pre/main.yaml
+    run:
+      - playbooks/run/main.yaml
+    post-run:
+      - playbooks/post/main.yaml
+    vars:
+      project_path: /some_path/project
+      project_name: HybridEngineTest
+      artifacts_path: /some_path/artifacts
+      pkg_name: pkg-release.tar.gz
+      upload_target: true
+
+######################################
+# playbooks/pre/main.yaml
+- name: Prepare environment for build process
+  hosts: all
+
+  tasks:
+    - name: set pre-run action
+      set_fact:
+        pre_run_action: prepare
+
+######################################
+# playbooks/run/main.yaml
+- name: Build project
+  hosts: all
+
+  tasks:
+    - name: set run action
+      set_fact:
+        run_action: build
+
+    - include_role:
+        name: build-project
+      # TODO: pass these vars to the role: 'project_path', 'project_name', 'pkg_name'
+
+######################################
+# roles/build-project/tasks/main.yaml
+# TODO: include tasks from windows.yaml for Windows hosts only
+# TODO: include tasks from linux.yaml for Linux hosts only
+
+######################################
+# roles/build-project/tasks/windows.yaml
+# TODO: add task that creates CMakeLists for the project via python script 'createMakefile.py'
+# TODO: add task that builds project via CMake in 'build' dir
+
+######################################
+# roles/build-project/tasks/linux.yaml
+# TODO: add task that creates CMakeLists for the project via python script 'createMakefile.py'
+# TODO: add task that builds project via CMake in 'build' dir
+
+######################################
+# playbooks/post/main.yaml
+- name: Upload build artifacts
+  hosts: all
+
+  tasks:
+    - name: set post-run action
+      set_fact:
+        post_run_action: upload
+
+    - name: compress all the files in tar.gz
+      archive:
+        path: "{{ project_path }}/build/{{ project_name }}"
+        dest: "{{ artifacts_path }}/{{ pkg_name }}"
+        format: gz
+      # TODO: run this task only when 'post_run_action' is set and 'upload_target' is true
+
+######################################
+# src -> some sources
+# CMakeLists.template
+# CMakeLists.txt.example
+
+# createMakefile.py -> py script
+import sys, os
+import argparse
+from pathlib import Path
+
+
+TEMPLATE_FILE = "CMakeLists.template"
+RESULT_FILE = "CMakeLists.txt"
+
+
+def get_sources(path):
+    # TODO: collect all src files under the given path and return srcs list
+    # TODO: reminder - all elements of the list should end with '\n'
+    return []
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--project", required=True, help = "Set project name.")
+    parser.add_argument("--src-path", required=True, help = "Set the search path for all src files.")
+    args = parser.parse_args()
+
+    srcs_lines = get_sources(args.src_path)
+
+    # TODO: read template file
+    # TODO: replace 'PROJECT_NAME' with given arg 'project'
+    # TODO: insert srcs_lines list between lines 7 and 8 in template file
+    # TODO: create result file with all info
+
+
+if __name__ == "__main__":
+    main()
