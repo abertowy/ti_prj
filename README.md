@@ -31,3 +31,5 @@ TI tasks:
     - build application via CMake;
     - explain output results;
     - fix memory allocation issue.
+
+Further reading: https://github.com/kee-reel/cpp-interview.git
